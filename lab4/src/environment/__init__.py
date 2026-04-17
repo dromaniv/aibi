@@ -1,0 +1,5 @@
+from environment.fogg_behavioral_model import Patient
+from environment.profile0 import Profile0Patient
+from environment.profile1 import Profile1Patient
+from environment.profile2 import Profile2Patient
+from environment.profile3 import Profile3Patient

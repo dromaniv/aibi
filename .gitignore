@@ -191,6 +191,12 @@ cython_debug/
 # Ruff stuff:
 .ruff_cache/
 
+lab4/aibi-dhi-simulator/
+lab4/src/environment/fogg_behavioral_model.py
+lab4/src/results/
+lab4/src/peer_baseline.npy
+lab4/docs
+
 # PyPI configuration file
 .pypirc
 
@@ -205,3 +211,6 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# pdf files
+*.pdf
