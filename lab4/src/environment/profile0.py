@@ -1,4 +1,4 @@
-from environment.fogg_behavioral_model import Patient
+from .fogg_behavioral_model import Patient
 
 
 class Profile0Patient(Patient):

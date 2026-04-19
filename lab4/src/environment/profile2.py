@@ -1,5 +1,5 @@
 import numpy as np
-from environment.fogg_behavioral_model import Patient
+from .fogg_behavioral_model import Patient
 
 
 class Profile2Patient(Patient):
@@ -14,11 +14,11 @@ class Profile2Patient(Patient):
         # Must set before super().__init__() because it calls reset() -> get_motivation()
         self.peer_rr_baseline = peer_rr_baseline if peer_rr_baseline is not None else np.zeros(56)
         self.day_index = 0
-        self.personal_best_daily = 0
+        self.personal_best_daily = None
         super().__init__(**kwargs)
 
     def update_after_day(self):
-        if self.activity_p > self.personal_best_daily:
+        if self.personal_best_daily is None or self.activity_p > self.personal_best_daily:
             self.personal_best_daily = self.activity_p
         self.day_index += 1
         super().update_after_day()
@@ -27,10 +27,16 @@ class Profile2Patient(Patient):
         base = super().get_motivation()
         # Peer comparison bonus
         current_rr = self.activity_p / self.activity_s if self.activity_s > 0 else 0.0
-        day = min(self.day_index, len(self.peer_rr_baseline) - 1)
-        peer_bonus = 1 if current_rr > self.peer_rr_baseline[day] else 0
+        if len(self.peer_rr_baseline) == 0:
+            peer_bonus = 0
+        else:
+            day = min(self.day_index, len(self.peer_rr_baseline) - 1)
+            peer_bonus = 1 if current_rr > self.peer_rr_baseline[day] else 0
         # Personal record bonus
-        record_bonus = 1 if self.activity_p >= self.personal_best_daily else 0
+        record_bonus = 1 if (
+            self.personal_best_daily is not None and
+            self.activity_p >= self.personal_best_daily
+        ) else 0
         return base + peer_bonus + record_bonus
 
     def get_trigger(self):

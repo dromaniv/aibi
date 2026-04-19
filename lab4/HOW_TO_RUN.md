@@ -8,7 +8,7 @@
 ## Setup
 
 ```bash
-cd aibi/lab4
+cd lab4
 git clone https://github.com/sysmon37/aibi-dhi-simulator
 python3 -m venv .venv
 source .venv/bin/activate
